@@ -8,6 +8,7 @@ namespace Sql.Mappers
         public static Transaction ToDbTransaction(this ITransaction model)
         {
             var transaction = new Transaction();
+            transaction.Id = model.Id;
             transaction.CustomerName = model.CustomerName;
             transaction.Amount = model.Amount;
             transaction.TransactionDate = model.TransactionDate;

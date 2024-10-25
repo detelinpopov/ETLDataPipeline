@@ -3,6 +3,7 @@ using Interfaces.Sql.Repositories;
 using Sql.Context;
 using Sql.Entities;
 using Sql.Mappers;
+using System.Collections.Generic;
 
 namespace Sql.Repositories
 {
@@ -22,8 +23,13 @@ namespace Sql.Repositories
 
         public async Task SaveAsync(IEnumerable<ITransaction> transactions)
         {
-            var transactionsToSave = transactions.ToListOfDbTransactions();        
-            await _dbContext.BulkMergeAsync(transactionsToSave);
+            var transactionsToSave = transactions.ToListOfDbTransactions();
+
+            await _dbContext.BulkMergeAsync(transactionsToSave, options =>
+            {
+                options.ColumnPrimaryKeyExpression = transaction => transaction.Id;
+                options.AllowDuplicateKeys = false;
+            });          
         }
     }
 }

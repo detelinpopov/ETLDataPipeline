@@ -7,9 +7,8 @@ namespace Sql.Entities
     public class Transaction : ITransaction
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
-
 
         [Required]
         [MaxLength(50)]
