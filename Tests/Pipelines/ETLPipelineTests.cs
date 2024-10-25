@@ -24,7 +24,7 @@ namespace Tests.Pipelines
             var apiDataSourceMock = new Mock<IDataSource<TransactionModel>>();
             apiDataSourceMock.Setup(e => e.ExtractAsync()).ReturnsAsync(new List<TransactionModel>
             {
-                new TransactionModel { Id = 3, CustomerName = "John Doe", TransactionDate = new DateTime(2023, 10, 15), Amount = 100.50m },
+                new TransactionModel { Id = 1, CustomerName = "John Doe", TransactionDate = new DateTime(2023, 10, 15), Amount = 100.50m },
                 new TransactionModel { Id = 4, CustomerName = "Alice Brown", TransactionDate = new DateTime(2023, 10, 17), Amount = 55.30m }
             });
 

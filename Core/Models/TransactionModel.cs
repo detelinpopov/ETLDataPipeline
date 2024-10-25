@@ -1,4 +1,5 @@
 ﻿using Interfaces.Sql.Entities;
+using System.Transactions;
 namespace Core.Models
 {
     public class TransactionModel
@@ -17,19 +18,18 @@ namespace Core.Models
 
         public override bool Equals(object obj)
         {
-            if (obj is TransactionModel other)
+            if (obj == null || GetType() != obj.GetType())
             {
-                return CustomerName == other.CustomerName &&
-                       Amount == other.Amount &&
-                       TransactionDate == other.TransactionDate;
+                return false;
             }
 
-            return false;
+            TransactionModel other = (TransactionModel)obj;
+            return Id == other.Id;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(CustomerName, Amount, TransactionDate);
+            return Id.GetHashCode();
         }
     }
 }
