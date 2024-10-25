@@ -23,17 +23,8 @@ namespace Sql.Entities
 
         public string DataSource { get; set; }
 
-        public User User { get; set; }
-
         public int UserId { get; set; }
-
-        [Required]
-        IUser ITransaction.User
-        {
-            get => User;
-            set => User = (User)value;
-        }
-
+      
         public DateTime CreatedDateTimeUtc { get; set; }
     }
 }

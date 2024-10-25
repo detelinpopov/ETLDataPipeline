@@ -11,7 +11,5 @@
         decimal Amount { get; set; }
 
         public string DataSource { get; set; }
-
-        public IUser User { get; set; }
     }
 }
