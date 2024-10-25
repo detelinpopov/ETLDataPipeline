@@ -14,22 +14,22 @@ namespace Tests.Pipelines
         public async Task Pipeline_ProcessesAllDataCorrectly()
         {
             // Arrange
-            var csvDataSourceMock = new Mock<IDataSource>();
+            var csvDataSourceMock = new Mock<IDataSource<TransactionModel>>();
             csvDataSourceMock.Setup(e => e.ExtractAsync()).ReturnsAsync(new List<TransactionModel>
             {
                 new TransactionModel { Id = 1, CustomerName = "John Doe", TransactionDate = new DateTime(2023, 10, 15), Amount = 100.50m },
                 new TransactionModel { Id = 2, CustomerName = "Jane Smith", TransactionDate = new DateTime(2023, 10, 16), Amount = 99.75m }
             });
 
-            var apiDataSourceMock = new Mock<IDataSource>();
+            var apiDataSourceMock = new Mock<IDataSource<TransactionModel>>();
             apiDataSourceMock.Setup(e => e.ExtractAsync()).ReturnsAsync(new List<TransactionModel>
             {
                 new TransactionModel { Id = 3, CustomerName = "John Doe", TransactionDate = new DateTime(2023, 10, 15), Amount = 100.50m },
                 new TransactionModel { Id = 4, CustomerName = "Alice Brown", TransactionDate = new DateTime(2023, 10, 17), Amount = 55.30m }
             });
 
-            var dataSources = new List<IDataSource> { csvDataSourceMock.Object, apiDataSourceMock.Object };
-            var transformationRules = new List<ITransformationRule>
+            var dataSources = new List<IDataSource<TransactionModel>> { csvDataSourceMock.Object, apiDataSourceMock.Object };
+            var transformationRules = new List<ITransformationRule<TransactionModel>>
             {
                 new RemoveDuplicatesRule(),
                 new FilterByMinAmountRule(100)

@@ -1,11 +1,11 @@
-﻿using Interfaces.Core.Transformations;
-using Interfaces.Sql.Entities;
+﻿using Core.Models;
+using Interfaces.Core.Transformations;
 
 namespace Core.TransformationRules
 {
-    public class RemoveDuplicatesRule : ITransformationRule
+    public class RemoveDuplicatesRule : ITransformationRule<TransactionModel>
     {
-        public IEnumerable<ITransaction> Apply(IEnumerable<ITransaction> transactions)
+        public IEnumerable<TransactionModel> Apply(IEnumerable<TransactionModel> transactions)
         {
             return transactions.Distinct();
         }

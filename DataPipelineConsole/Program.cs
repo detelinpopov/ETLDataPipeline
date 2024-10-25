@@ -1,16 +1,19 @@
 ﻿using Core.DataSources;
+using Core.Models;
 using Core.Pipelines;
 using Core.Services;
 using Core.TransformationRules;
 using Interfaces.Core.DataSources;
 using Interfaces.Core.Services;
 using Interfaces.Core.Transformations;
+using Interfaces.Sql.Entities;
 using Interfaces.Sql.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Sql.Context;
 using Sql.Repositories;
+using Core.Mappers;
 
 class Program
 {
@@ -23,21 +26,28 @@ class Program
         var apiSource = new ApiDataSource();
 
         // Define transformation rules
-        var transformationRules = new List<ITransformationRule>
+        var transformationRules = new List<ITransformationRule<TransactionModel>>
         {
-            //new DateFormattingRule("dd/MM/yyyy"),
+            new RemoveDuplicatesRule(),
             new FilterByMinAmountRule(100.0m),
-            new RemoveDuplicatesRule()
+            new FilterByDateRule(DateTime.Now.AddMonths(-36))          
         };
 
         // Create ETL pipeline
-        var pipeline = new EtlPipeline(new IDataSource[] { csvSource, apiSource }, transformationRules);
+        var pipeline = new EtlPipeline(new IDataSource<TransactionModel>[] { csvSource, apiSource }, transformationRules);
 
         // Run the pipeline
         var results = await pipeline.RunAsync();
 
         var transactionService = serviceProvider.GetService<ITransactionService>();
-        await transactionService.SaveAsync(results);
+
+        var transactionsToSave = new List<ITransaction>();
+        foreach (var transactionModel in results.Where(r => r != null))
+        {
+            transactionsToSave.Add(transactionModel.ToTransaction(transactionService));
+        }
+
+        await transactionService.SaveAsync(transactionsToSave);
 
         // Output results
         foreach (var transaction in results)

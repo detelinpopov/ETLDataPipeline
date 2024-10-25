@@ -1,7 +1,7 @@
 ﻿using Interfaces.Sql.Entities;
 namespace Core.Models
 {
-    public class TransactionModel : ITransaction
+    public class TransactionModel
     {
         public int Id { get; set; }
 

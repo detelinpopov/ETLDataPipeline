@@ -1,11 +1,10 @@
 ﻿using Core.Enums;
 using Core.Models;
 using Interfaces.Core.DataSources;
-using Interfaces.Sql.Entities;
 
 namespace Core.DataSources
 {
-    public class CsvDataSource : IDataSource
+    public class CsvDataSource : IDataSource<TransactionModel>
     {
         private readonly string _filePath;
 
@@ -14,7 +13,7 @@ namespace Core.DataSources
             _filePath = filePath;
         }
 
-        public async Task<IEnumerable<ITransaction>> ExtractAsync()
+        public async Task<IEnumerable<TransactionModel>> ExtractAsync()
         {
             var transactions = new List<TransactionModel>();
             using (var reader = new StreamReader(_filePath))

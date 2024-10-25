@@ -1,8 +1,8 @@
 ﻿using Interfaces.Sql.Entities;
 namespace Interfaces.Core.Transformations
 {
-    public interface ITransformationRule
+    public interface ITransformationRule<T>
     {
-        IEnumerable<ITransaction> Apply(IEnumerable<ITransaction> transactions);
+        IEnumerable<T> Apply(IEnumerable<T> transactions);
     }
 }

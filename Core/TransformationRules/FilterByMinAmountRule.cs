@@ -1,9 +1,9 @@
-﻿using Interfaces.Core.Transformations;
-using Interfaces.Sql.Entities;
+﻿using Core.Models;
+using Interfaces.Core.Transformations;
 
 namespace Core.TransformationRules
 {
-    public class FilterByMinAmountRule : ITransformationRule
+    public class FilterByMinAmountRule : ITransformationRule<TransactionModel>
     {
         private readonly decimal _minAmount;
 
@@ -12,7 +12,7 @@ namespace Core.TransformationRules
             _minAmount = minAmount;
         }
 
-        public IEnumerable<ITransaction> Apply(IEnumerable<ITransaction> transactions)
+        public IEnumerable<TransactionModel> Apply(IEnumerable<TransactionModel> transactions)
         {
             return transactions.Where(t => t.Amount >= _minAmount);
         }

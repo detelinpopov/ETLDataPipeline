@@ -1,9 +1,7 @@
-﻿using Interfaces.Sql.Entities;
-
-namespace Interfaces.Core.DataSources
+﻿namespace Interfaces.Core.DataSources
 {
-    public interface IDataSource
+    public interface IDataSource<T>
     {
-        Task<IEnumerable<ITransaction>> ExtractAsync();
+        Task<IEnumerable<T>> ExtractAsync();
     }
 }
