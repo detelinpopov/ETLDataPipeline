@@ -12,8 +12,19 @@ namespace Sql.Mappers
             transaction.Amount = model.Amount;
             transaction.TransactionDate = model.TransactionDate;
             transaction.DataSource = model.DataSource;
-
             return transaction;
+        }
+
+        public static List<Transaction> ToListOfDbTransactions(this IEnumerable<ITransaction> transactionsToMap)
+        {
+            var mappedTransactions = new List<Transaction>();
+            foreach (var transactionToMap in transactionsToMap) 
+            {
+                var mappedTransaction = transactionToMap.ToDbTransaction();
+                mappedTransactions.Add(mappedTransaction);
+            }
+
+            return mappedTransactions;
         }
     }
 }

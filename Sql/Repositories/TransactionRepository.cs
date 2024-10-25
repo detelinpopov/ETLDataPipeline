@@ -22,14 +22,7 @@ namespace Sql.Repositories
 
         public async Task SaveAsync(IEnumerable<ITransaction> transactions)
         {
-            var transactionsToSave = new List<Transaction>();
-            foreach (var transactionModel in transactions)
-            {
-                var dbTransaction = transactionModel.ToDbTransaction();   
-                dbTransaction.CreatedDateTimeUtc = DateTime.UtcNow;
-                transactionsToSave.Add(dbTransaction);             
-            }
-
+            var transactionsToSave = transactions.ToListOfDbTransactions();        
             await _dbContext.BulkMergeAsync(transactionsToSave);
         }
     }
