@@ -1,5 +1,5 @@
 ﻿using Core.Models;
-using Interfaces.Core.DataSources;
+using Interfaces.Core;
 using Interfaces.Core.Transformations;
 
 namespace Core.Pipelines

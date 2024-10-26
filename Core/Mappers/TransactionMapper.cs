@@ -14,6 +14,15 @@ namespace Core.Mappers
             transaction.Amount = model.Amount;
             transaction.TransactionDate = model.TransactionDate;
             transaction.DataSource = model.DataSource;
+
+            if (model.PaymentDetails != null)
+            {
+                transaction.PaymentDetails = transactionService.CreatePaymentDetailsEntity();
+                transaction.PaymentDetails.PaymentMethod = model.PaymentDetails.PaymentMethod;
+                transaction.PaymentDetails.PaymentCompletedDate = model.PaymentDetails.PaymentCompletedDate;
+                transaction.PaymentDetails.CreatedDateUtc = DateTime.UtcNow;
+            }
+
             return transaction;
         }
     }

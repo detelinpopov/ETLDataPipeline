@@ -1,7 +1,7 @@
 ﻿using Core.Models;
 using Core.Pipelines;
 using Core.TransformationRules;
-using Interfaces.Core.DataSources;
+using Interfaces.Core;
 using Interfaces.Core.Transformations;
 using Moq;
 

@@ -3,7 +3,7 @@ using Interfaces.Sql.Repositories;
 using Sql.Context;
 using Sql.Entities;
 using Sql.Mappers;
-using System.Collections.Generic;
+using Z.BulkOperations;
 
 namespace Sql.Repositories
 {
@@ -21,6 +21,11 @@ namespace Sql.Repositories
             return new Transaction();
         }
 
+        public IPaymentDetails CreatePaymentDetailsEntity()
+        {
+            return new PaymentDetails();
+        }
+
         public async Task SaveAsync(IEnumerable<ITransaction> transactions)
         {
             var transactionsToSave = transactions.ToListOfDbTransactions();
@@ -29,7 +34,16 @@ namespace Sql.Repositories
             {
                 options.ColumnPrimaryKeyExpression = transaction => transaction.Id;
                 options.AllowDuplicateKeys = false;
-            });          
+                options.IncludeGraph = true;
+                options.IncludeGraphOperationBuilder = operation =>
+                {
+                    if (operation is BulkOperation<PaymentDetails>)
+                    {
+                        var bulk = (BulkOperation<PaymentDetails>)operation;
+                        bulk.ColumnPrimaryKeyExpression = d => d.Id;
+                    }                  
+                };
+            });
         }
     }
 }

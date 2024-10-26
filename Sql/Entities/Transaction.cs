@@ -20,10 +20,20 @@ namespace Sql.Entities
         [Required]
         public decimal Amount { get; set; }
 
+        [MaxLength(50)]
         public string DataSource { get; set; }
 
-        public int UserId { get; set; }
-      
+        public virtual PaymentDetails PaymentDetails { get; set; }
+
+        public int? PaymentDetailsId { get; set; }
+
+        IPaymentDetails ITransaction.PaymentDetails
+        {
+            get => PaymentDetails;
+            set => PaymentDetails = value as PaymentDetails;
+        }
+
+        [Required]
         public DateTime CreatedDateTimeUtc { get; set; }
     }
 }

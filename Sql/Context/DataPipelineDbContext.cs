@@ -20,5 +20,7 @@ namespace Sql.Context
         }
 
         public DbSet<Transaction> Transactions { get; set; }
+
+        public DbSet<PaymentDetails> PaymentDetails { get; set; }
     }
 }

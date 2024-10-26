@@ -9,7 +9,6 @@ namespace Tests.Core
         public async Task MockApiExtractor_ShouldExtractDataFromMockApi()
         {
             // Arrange
-            //var mockApiData = "[{\"Id\": 1, \"CustomerName\": \"John Doe\", \"TransactionDate\": \"2023-10-15T00:00:00\", \"Amount\": 100.50 }]";
             var mockApiExtractor = new ApiDataSource();
 
             // Mock the response to return hardcoded JSON

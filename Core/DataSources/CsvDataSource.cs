@@ -1,6 +1,6 @@
 ﻿using Core.Enums;
 using Core.Models;
-using Interfaces.Core.DataSources;
+using Interfaces.Core;
 
 namespace Core.DataSources
 {

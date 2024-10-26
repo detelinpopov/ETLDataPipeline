@@ -1,6 +1,4 @@
-﻿using Interfaces.Sql.Entities;
-using System.Transactions;
-namespace Core.Models
+﻿namespace Core.Models
 {
     public class TransactionModel
     {
@@ -13,8 +11,8 @@ namespace Core.Models
         public DateTime TransactionDate { get; set; }
 
         public string DataSource { get; set; }
-
-        public IUser User { get; set; }
+  
+        public PaymentDetailsModel PaymentDetails { get; set; }
 
         public override bool Equals(object obj)
         {

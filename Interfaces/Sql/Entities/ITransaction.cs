@@ -11,5 +11,7 @@
         decimal Amount { get; set; }
 
         public string DataSource { get; set; }
+
+        public IPaymentDetails PaymentDetails { get; set; }
     }
 }

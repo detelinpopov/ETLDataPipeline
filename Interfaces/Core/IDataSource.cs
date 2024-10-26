@@ -1,4 +1,4 @@
-﻿namespace Interfaces.Core.DataSources
+﻿namespace Interfaces.Core
 {
     public interface IDataSource<T>
     {
