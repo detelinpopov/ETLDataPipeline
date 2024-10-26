@@ -7,7 +7,7 @@
         /// </summary>
         public bool Success { get; set; } = true;
 
-        public IEnumerable<ErrorModel> Errors { get; set; } = Enumerable.Empty<ErrorModel>();
+        public IList<ErrorModel> Errors { get; set; } = new List<ErrorModel>();
 
         public string GetErrorsAsString()
         {
