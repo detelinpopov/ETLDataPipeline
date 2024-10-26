@@ -12,9 +12,9 @@ namespace Tests.TransformationRules
             // Arrange
             var transactions = new List<TransactionModel>
             {
-                new TransactionModel { Id = 1, CustomerName = "John Doe", TransactionDate = new DateTime(2023, 10, 15), Amount = 100.50m },
-                new TransactionModel { Id = 1, CustomerName = "John Doe", TransactionDate = new DateTime(2023, 10, 15), Amount = 100.50m },
-                new TransactionModel { Id = 2, CustomerName = "Jane Smith", TransactionDate = new DateTime(2023, 10, 16), Amount = 200.75m }
+                new() { Id = 1, CustomerName = "John Doe", TransactionDate = new DateTime(2023, 10, 15), Amount = 100.50m },
+                new() { Id = 1, CustomerName = "John Doe", TransactionDate = new DateTime(2023, 10, 15), Amount = 100.50m },
+                new() { Id = 2, CustomerName = "Jane Smith", TransactionDate = new DateTime(2023, 10, 16), Amount = 200.75m }
             };
 
             var rule = new RemoveDuplicatesRule();

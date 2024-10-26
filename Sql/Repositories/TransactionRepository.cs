@@ -28,7 +28,6 @@ namespace Sql.Repositories
         public async Task SaveAsync(IEnumerable<ITransaction> transactions)
         {
             var transactionsToSave = transactions.ToListOfDbTransactions();
-
             var paymentDetailsToSave = transactionsToSave.Where(t => t.PaymentDetails != null).Select(t => t.PaymentDetails).ToList();
 
             using (var dbContextTransaction = _dbContext.Database.BeginTransaction())
@@ -43,17 +42,7 @@ namespace Sql.Repositories
                 await _dbContext.BulkMergeAsync(transactionsToSave, options =>
                 {
                     options.ColumnPrimaryKeyExpression = transaction => transaction.Id;
-                    options.AllowDuplicateKeys = false;
-                    //options.IncludeGraph = true;
-                    //options.IncludeGraphOperationBuilder = operation =>
-                    //{
-                    //    if (operation is BulkOperation<PaymentDetails>)
-                    //    {
-                    //        var bulk = (BulkOperation<PaymentDetails>)operation;
-                    //        bulk.ColumnPrimaryKeyExpression = d => d.Id;
-                    //        bulk.InsertIfNotExists = true;                       
-                    //    }                  
-                    //};
+                    options.AllowDuplicateKeys = false;                   
                 });
 
                 dbContextTransaction.Commit();

@@ -14,6 +14,7 @@ using Sql.Context;
 using Sql.Repositories;
 using Core.Mappers;
 using Interfaces.Core;
+using Core.Models.Operations;
 
 class Program
 {
@@ -44,15 +45,15 @@ class Program
             };
 
             // Create ETL pipeline
-            var pipeline = new EtlPipeline(new IDataSource<TransactionModel>[] { csvDataSource, apiDataSource }, transformationRules);
+            var pipeline = new EtlPipeline(new IDataSource<ExtractTransactionsResult>[] { csvDataSource, apiDataSource }, transformationRules);
 
             // Run the pipeline
-            var results = await pipeline.RunAsync();
+            var result = await pipeline.RunAsync();
 
             var transactionService = serviceProvider.GetService<ITransactionService>();
 
             var transactionsToSave = new List<ITransaction>();
-            foreach (var transactionModel in results.Where(r => r != null))
+            foreach (var transactionModel in result.Transactions.Where(r => r != null))
             {
                 transactionsToSave.Add(transactionModel.ToTransaction(transactionService));
             }
@@ -60,7 +61,7 @@ class Program
             await transactionService.SaveAsync(transactionsToSave);
 
             // Output results
-            foreach (var transaction in results)
+            foreach (var transaction in result.Transactions)
             {
                 Console.WriteLine($"Transaction: {transaction.CustomerName}, Amount: {transaction.Amount}, Date: {transaction.TransactionDate}");
             }

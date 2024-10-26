@@ -19,7 +19,7 @@ namespace Tests.Core
             var csvDataSource = new CsvDataSource(csvFilePath);
 
             // Act
-            var transactions = (await csvDataSource.ExtractAsync()).ToList();
+            var transactions = (await csvDataSource.ExtractAsync()).Transactions.ToList();
 
             // Assert
             Assert.AreEqual(2, transactions.Count);

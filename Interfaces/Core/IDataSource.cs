@@ -2,6 +2,6 @@
 {
     public interface IDataSource<T>
     {
-        Task<IEnumerable<T>> ExtractAsync();
+        Task<T> ExtractAsync();
     }
 }

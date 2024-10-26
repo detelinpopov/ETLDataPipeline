@@ -1,19 +1,22 @@
 ﻿using Core.Enums;
 using Core.Models;
+using Core.Models.Operations;
 using Interfaces.Core;
 
 namespace Core.DataSources
 {
-    public class ApiDataSource : IDataSource<TransactionModel>
+    public class ApiDataSource : IDataSource<ExtractTransactionsResult>
     {
-        public async Task<IEnumerable<TransactionModel>> ExtractAsync()
+        public async Task<ExtractTransactionsResult> ExtractAsync()
         {
+            var result = new ExtractTransactionsResult();
+
             // Mock API call, replace with real API call logic
             await Task.Delay(100); // Simulating network latency
 
-            return new List<TransactionModel>
+            var transactions = new List<TransactionModel>
                 {
-                    new TransactionModel
+                    new() 
                     {
                         Id = 101, CustomerName = "Test Customer 1",
                         Amount = 120.50m,
@@ -25,8 +28,8 @@ namespace Core.DataSources
                             PaymentCompletedDate = DateTime.Now,
                         }
                     },
-                   new TransactionModel
-                    {
+                   new() 
+                   {
                         Id = 102, CustomerName = "Test Customer 2",
                         Amount = 99.50m,
                         TransactionDate = DateTime.Now.AddHours(-7),
@@ -37,7 +40,7 @@ namespace Core.DataSources
                             PaymentCompletedDate = DateTime.Now.AddHours(-8),
                         }
                     },
-                    new TransactionModel
+                    new() 
                     {
                         Id = 103, CustomerName = "Test Customer 3",
                         Amount = 2500m,
@@ -50,6 +53,9 @@ namespace Core.DataSources
                         }
                     }
                 };
+
+            result.Transactions = transactions;
+            return result;
         }
     }
 }
