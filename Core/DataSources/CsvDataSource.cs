@@ -34,6 +34,11 @@ namespace Core.DataSources
                             Amount = decimal.Parse(values[2]),
                             TransactionDate = DateTime.Parse(values[3]),
                             DataSource = DataSource.CSV.ToString(),
+                            PaymentDetails = new PaymentDetailsModel 
+                            { 
+                                PaymentMethod = values[4], 
+                                PaymentCompletedDate = DateTime.Parse(values[5]) 
+                            }
                         };
 
                         convertedTransactionsResult.Transactions.Add(csvEntryToTransaction);

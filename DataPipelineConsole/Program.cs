@@ -22,9 +22,9 @@ class Program
     {
         // Create CSV file for testing purposes
         var csvFilePath = "test_transactions.csv";
-        var csvContent = "Id,CustomerName,Amount,TransactionDate\n" +
-                         "1,John Doe,100,2024-10-15\n" +
-                         "2,Jane Smith,200,2024-10-16";
+        var csvContent = "Id,CustomerName,Amount,TransactionDate,PaymentMethod,PaymentCompletedDate\n" +
+                         "1,John Doe,100,2024-10-15,CreditCard,2024-10-15 11:32:00\n" +
+                         "2,Jane Smith,200,2024-10-16,DigitalWallet,2024-10-16 13:11:13";
 
         await File.WriteAllTextAsync(csvFilePath, csvContent);
 

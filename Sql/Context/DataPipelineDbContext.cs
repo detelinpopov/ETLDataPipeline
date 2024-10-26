@@ -16,7 +16,7 @@ namespace Sql.Context
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {              
                 modelBuilder.Entity(entityType.ClrType).ToTable(entityType.ClrType.Name);
-            }
+            }         
         }
 
         public DbSet<Transaction> Transactions { get; set; }

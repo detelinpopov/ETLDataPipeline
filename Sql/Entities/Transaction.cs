@@ -25,7 +25,7 @@ namespace Sql.Entities
 
         public virtual PaymentDetails PaymentDetails { get; set; }
 
-        public int? PaymentDetailsId { get; set; }
+        public int PaymentDetailsId { get; set; }
 
         IPaymentDetails ITransaction.PaymentDetails
         {
