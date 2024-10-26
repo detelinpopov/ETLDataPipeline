@@ -13,8 +13,8 @@ namespace Sql.Mappers
             transaction.Amount = model.Amount;
             transaction.TransactionDate = model.TransactionDate;
             transaction.DataSource = model.DataSource;
-
-            if(model.PaymentDetails != null)
+           
+            if (model.PaymentDetails != null)
             {
                 transaction.PaymentDetails = new PaymentDetails();
                 transaction.PaymentDetails.PaymentMethod = model.PaymentDetails.PaymentMethod;
@@ -22,6 +22,7 @@ namespace Sql.Mappers
                 transaction.PaymentDetails.CreatedDateUtc = DateTime.UtcNow;
             }
 
+            transaction.CreatedDateTimeUtc = DateTime.UtcNow;
             return transaction;
         }
 

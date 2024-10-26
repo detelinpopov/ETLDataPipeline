@@ -22,11 +22,11 @@ namespace Core.Pipelines
 
             // Extract data from all sources in parallel
             var extractTransactionsResult = _dataSources.Select(source => source.ExtractAsync());
-            var extractedDataFromAllSources = await Task.WhenAll(extractTransactionsResult);
+            var extractedResultsFromAllSources = await Task.WhenAll(extractTransactionsResult);
 
-            foreach (var extractedResultFromSource in extractedDataFromAllSources)
+            foreach (var extractedResult in extractedResultsFromAllSources)
             {
-                ((List<TransactionModel>)extractedDataResult.Transactions).AddRange(extractedResultFromSource.Transactions);
+                ((List<TransactionModel>)extractedDataResult.Transactions).AddRange(extractedResult.Transactions);
             }
 
             // Apply transformation rules

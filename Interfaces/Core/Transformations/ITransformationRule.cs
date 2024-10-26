@@ -1,5 +1,4 @@
-﻿using Interfaces.Sql.Entities;
-namespace Interfaces.Core.Transformations
+﻿namespace Interfaces.Core.Transformations
 {
     public interface ITransformationRule<T>
     {
