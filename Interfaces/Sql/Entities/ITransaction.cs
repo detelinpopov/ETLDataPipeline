@@ -2,13 +2,13 @@
 {
     public interface ITransaction
     {
-        int Id { get; set; }
+        public int Id { get; set; }
 
-        string CustomerName { get; set; }
+        public string CustomerName { get; set; }
 
-        DateTime TransactionDate { get; set; }
+        public DateTime TransactionDate { get; set; }
 
-        decimal Amount { get; set; }
+        public decimal Amount { get; set; }
 
         public string DataSource { get; set; }
 

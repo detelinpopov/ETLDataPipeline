@@ -4,6 +4,6 @@
     {
         API,
         CSV,
-        SQL,      
+        SQL      
     }
 }

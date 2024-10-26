@@ -10,6 +10,6 @@
         PayPal,
         DigitalWallet,
         Cryptocurrency,
-        GiftCard,
+        GiftCard
     }
 }

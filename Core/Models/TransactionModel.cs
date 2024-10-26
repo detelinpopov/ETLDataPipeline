@@ -10,6 +10,9 @@
 
         public DateTime TransactionDate { get; set; }
 
+        /// <summary>
+        /// Specifies the data source of the transaction. For example API, CSV, SQL, etc.
+        /// </summary>
         public string DataSource { get; set; }
   
         public PaymentDetailsModel PaymentDetails { get; set; }

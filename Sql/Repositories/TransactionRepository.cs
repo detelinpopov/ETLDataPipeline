@@ -3,7 +3,6 @@ using Interfaces.Sql.Repositories;
 using Sql.Context;
 using Sql.Entities;
 using Sql.Mappers;
-using Z.BulkOperations;
 
 namespace Sql.Repositories
 {
@@ -30,20 +29,35 @@ namespace Sql.Repositories
         {
             var transactionsToSave = transactions.ToListOfDbTransactions();
 
-            await _dbContext.BulkMergeAsync(transactionsToSave, options =>
+            var paymentDetailsToSave = transactionsToSave.Where(t => t.PaymentDetails != null).Select(t => t.PaymentDetails).ToList();
+
+            using (var dbContextTransaction = _dbContext.Database.BeginTransaction())
             {
-                options.ColumnPrimaryKeyExpression = transaction => transaction.Id;
-                options.AllowDuplicateKeys = false;
-                options.IncludeGraph = true;
-                options.IncludeGraphOperationBuilder = operation =>
+                // Use BulkMergeAsync to upsert records
+                await _dbContext.BulkMergeAsync(paymentDetailsToSave, options =>
                 {
-                    if (operation is BulkOperation<PaymentDetails>)
-                    {
-                        var bulk = (BulkOperation<PaymentDetails>)operation;
-                        bulk.ColumnPrimaryKeyExpression = d => d.Id;
-                    }                  
-                };
-            });
+                    options.ColumnPrimaryKeyExpression = paymentDetails => paymentDetails.Id;
+                    options.AllowDuplicateKeys = false;
+                });
+
+                await _dbContext.BulkMergeAsync(transactionsToSave, options =>
+                {
+                    options.ColumnPrimaryKeyExpression = transaction => transaction.Id;
+                    options.AllowDuplicateKeys = false;
+                    //options.IncludeGraph = true;
+                    //options.IncludeGraphOperationBuilder = operation =>
+                    //{
+                    //    if (operation is BulkOperation<PaymentDetails>)
+                    //    {
+                    //        var bulk = (BulkOperation<PaymentDetails>)operation;
+                    //        bulk.ColumnPrimaryKeyExpression = d => d.Id;
+                    //        bulk.InsertIfNotExists = true;                       
+                    //    }                  
+                    //};
+                });
+
+                dbContextTransaction.Commit();
+            }
         }
     }
 }
