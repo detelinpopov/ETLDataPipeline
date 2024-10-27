@@ -27,6 +27,7 @@ namespace Core.Pipelines
             foreach (var extractedResult in extractedResultsFromAllSources)
             {
                 ((List<TransactionModel>)extractedDataResult.Transactions).AddRange(extractedResult.Transactions);
+                ((List<ErrorModel>)extractedDataResult.Errors).AddRange(extractedResult.Errors);
             }
 
             // Apply transformation rules

@@ -29,7 +29,7 @@ class Program
         var csvContent = "Id,Amount,TransactionDate,PaymentMethod,CustomerId,CustomerName\n" +
                          "1,100,2024-10-15,CreditCard,1,Customer CSV 11\n" +
                          "2,56,2024-10-16,DigitalWallet,456,Customer CSV 2\n" +
-                         "3,233,2024-01-02,DebitCard,77,Customer CSV 3";
+                         "3,233,2024-01-02,DebitCard,aa,Customer CSV 3";
 
         await File.WriteAllTextAsync(csvFilePath, csvContent);
 
@@ -64,15 +64,31 @@ class Program
             await transactionService.SaveAsync(transactionsToSave);
 
             // Output results
+            Console.WriteLine($"{result.Transactions.Count} out of {result.Transactions.Count + result.Errors.Count} transactions processed and saved successfully!");
+
+            if(result.Errors.Count > 0)
+            {
+                Console.WriteLine();
+                Console.WriteLine($"{result.Errors.Count} occured during the operation:");
+                int errorIndex = 1;
+                foreach (var error in result.Errors)
+                {
+                    Console.WriteLine($"Error {errorIndex}: {error.ErrorMessage}.");
+                }
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("Successfully processed transactions: ");
             foreach (var transaction in result.Transactions)
             {
-                Console.WriteLine($"Transaction: {transaction.Customer.Name}, Amount: {transaction.Amount}, Date: {transaction.TransactionDate}");
+                Console.WriteLine();
+                Console.WriteLine($"Customer Name: {transaction.Customer.Name}, Amount: {transaction.Amount}, Payment Method: {transaction.PaymentMethod}, Date: {transaction.TransactionDate}");
 
-                var log = transactionLogService.CreateEntity();
-                log.LogType = LogType.Message.ToString();
-                log.Message = $"Transaction Created: {transaction.Customer.Name}, Amount: {transaction.Amount}, Date: {transaction.TransactionDate}";
-                log.Severity = 1;
-                await transactionLogService.SaveAsync(log);
+                //var log = transactionLogService.CreateEntity();
+                //log.LogType = LogType.Message.ToString();
+                //log.Message = $"Transaction Created: {transaction.Customer.Name}, Amount: {transaction.Amount}, Date: {transaction.TransactionDate}";
+                //log.Severity = 1;
+                //await transactionLogService.SaveAsync(log);
             }
         }
         catch (Exception ex)
