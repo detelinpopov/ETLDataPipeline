@@ -1,5 +1,5 @@
 ﻿using Core.Enums;
-using Core.Models;
+using Core.Mappers;
 using Core.Models.Operations;
 using Interfaces.Core;
 
@@ -24,25 +24,22 @@ namespace Core.DataSources
                 {
                     try
                     {
-                        var line = await reader.ReadLineAsync();
-                        var values = line.Split(',');
-                        var paymentMethod = Enum.TryParse(values[3], out PaymentMethod paymentMethodParsed);
-
-                        var csvEntryToTransaction = new TransactionModel
+                        var csvLine = await reader.ReadLineAsync();
+                        if (csvLine != null)
                         {
-                            Id = int.Parse(values[0]),
-                            Amount = decimal.Parse(values[1]),
-                            TransactionDate = DateTime.Parse(values[2]),
-                            DataSource = DataSource.CSV.ToString(),
-                            PaymentMethod = paymentMethodParsed,
-                            Customer = new CustomerModel
+                            var convertCsvToModelResult = CsvToTransactionMapper.CsvLineToTransactionModel(csvLine);
+                            if (convertCsvToModelResult.Success)
                             {
-                                Id = int.Parse(values[4]),
-                                Name = values[5] 
+                                convertedTransactionsResult.Transactions.Add(convertCsvToModelResult.ConvertedTransactionModel);
                             }
-                        };
-
-                        convertedTransactionsResult.Transactions.Add(csvEntryToTransaction);
+                            else
+                            {
+                                foreach (var error in convertCsvToModelResult.Errors)
+                                {
+                                    convertedTransactionsResult.Errors.Add(error);
+                                }
+                            }
+                        }
                     }
                     catch (Exception ex)
                     {

@@ -5,8 +5,8 @@
         /// <summary>
         ///     Indicates if the operation completed successfully.
         /// </summary>
-        public bool Success { get; set; } = true;
-
+        public bool Success => !Errors.Any();
+           
         public IList<ErrorModel> Errors { get; set; } = new List<ErrorModel>();
 
         public string GetErrorsAsString()
