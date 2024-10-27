@@ -12,9 +12,9 @@ namespace Tests.TransformationRules
             // Arrange
             var transactions = new List<TransactionModel>
             {
-                new TransactionModel { Id = 1, CustomerName = "Customer Less Than 100", TransactionDate = new DateTime(2023, 10, 15), Amount = 99m },
-                new TransactionModel { Id = 2, CustomerName = "John Doe", TransactionDate = new DateTime(2023, 10, 15), Amount = 100.50m },
-                new TransactionModel { Id = 3, CustomerName = "Jane Smith", TransactionDate = new DateTime(2023, 10, 16), Amount = 200.75m }
+                new TransactionModel { Id = 1, TransactionDate = new DateTime(2023, 10, 15), Amount = 99m, Customer = new CustomerModel { Name = "Customer Less Than 100" } },
+                new TransactionModel { Id = 2, TransactionDate = new DateTime(2023, 10, 15), Amount = 100.50m, Customer = new CustomerModel { Name = "Customer 2" } },
+                new TransactionModel { Id = 3, TransactionDate = new DateTime(2023, 10, 16), Amount = 200.75m, Customer = new CustomerModel { Name = "Customer 3" }}
             };
 
             var rule = new FilterByMinAmountRule(100);
@@ -24,9 +24,9 @@ namespace Tests.TransformationRules
 
             // Assert
             Assert.AreEqual(2, result.Count);
-            Assert.IsTrue(result.Any(r => r.CustomerName == "John Doe"));
-            Assert.IsTrue(result.Any(r => r.CustomerName == "Jane Smith"));
-            Assert.IsFalse(result.Any(r => r.CustomerName == "Customer Less Than 100"));
+            Assert.IsTrue(result.Any(r => r.Customer.Name == "Customer 2"));
+            Assert.IsTrue(result.Any(r => r.Customer.Name == "Customer 3"));
+            Assert.IsFalse(result.Any(r => r.Customer.Name == "Customer Less Than 100"));
         }
     }
 }

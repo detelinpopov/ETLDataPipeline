@@ -16,7 +16,7 @@ namespace Tests.Core
 
             // Assert
             Assert.IsNotNull(mockResult);
-            Assert.AreEqual("Test Customer 1", mockResult.Transactions.First().CustomerName);
+            Assert.AreEqual("Test Customer 1", mockResult.Transactions.First().Customer.Name);
         }
     }
 }

@@ -9,17 +9,16 @@ namespace Sql.Mappers
         {
             var transaction = new Transaction();
             transaction.Id = model.Id;
-            transaction.CustomerName = model.CustomerName;
             transaction.Amount = model.Amount;
             transaction.TransactionDate = model.TransactionDate;
+            transaction.PaymentMethod = model.PaymentMethod;
             transaction.DataSource = model.DataSource;
            
-            if (model.PaymentDetails != null)
+            if (model.Customer != null)
             {
-                transaction.PaymentDetails = new PaymentDetails();
-                transaction.PaymentDetails.PaymentMethod = model.PaymentDetails.PaymentMethod;
-                transaction.PaymentDetails.PaymentCompletedDate = model.PaymentDetails.PaymentCompletedDate;
-                transaction.PaymentDetails.CreatedDateUtc = DateTime.UtcNow;
+                transaction.Customer = new Customer();
+                transaction.Customer.Name = model.Customer.Name;
+                transaction.Customer.CreatedDateUtc = DateTime.UtcNow;
             }
 
             transaction.CreatedDateTimeUtc = DateTime.UtcNow;

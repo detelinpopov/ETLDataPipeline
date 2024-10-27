@@ -6,7 +6,7 @@ namespace Interfaces.Core.Services
     {
         ITransaction CreateEntity();
 
-        IPaymentDetails CreatePaymentDetailsEntity();
+        ICustomer CreateCustomerEntity();
 
         Task SaveAsync(IEnumerable<ITransaction> transactions);
     }

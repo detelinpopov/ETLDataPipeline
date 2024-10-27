@@ -4,17 +4,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Sql.Entities
 {
-    public class PaymentDetails : IPaymentDetails
+    public class Customer : ICustomer
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(50)]
-        public string PaymentMethod { get; set; }
-
-        public DateTime? PaymentCompletedDate { get; set; }
+        [MaxLength(100)]
+        public string Name { get; set; }
 
         [Required]
         public DateTime CreatedDateUtc { get; set; }

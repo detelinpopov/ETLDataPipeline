@@ -21,9 +21,9 @@ namespace Sql.Repositories
             return new Transaction();
         }
 
-        public IPaymentDetails CreatePaymentDetailsEntity()
+        public ICustomer CreateCustomerEntity()
         {
-            return new PaymentDetails();
+            return new Customer();
         }
 
         public async Task SaveAsync(IEnumerable<ITransaction> transactions)

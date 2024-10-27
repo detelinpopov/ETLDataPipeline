@@ -9,11 +9,7 @@ namespace Sql.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
-
-        [Required]
-        [MaxLength(50)]
-        public string CustomerName { get; set; }
-
+      
         [Required]
         public DateTime TransactionDate { get; set; }
 
@@ -23,14 +19,16 @@ namespace Sql.Entities
         [MaxLength(50)]
         public string DataSource { get; set; }
 
-        public virtual PaymentDetails PaymentDetails { get; set; }
+        public string PaymentMethod { get; set; }
 
-        public int PaymentDetailsId { get; set; }
+        public virtual Customer Customer { get; set; }
 
-        IPaymentDetails ITransaction.PaymentDetails
+        public int CustomerId { get; set; }
+
+        ICustomer ITransaction.Customer
         {
-            get => PaymentDetails;
-            set => PaymentDetails = value as PaymentDetails;
+            get => Customer;
+            set => Customer = value as Customer;
         }
 
         [Required]

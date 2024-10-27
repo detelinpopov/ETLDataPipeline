@@ -18,9 +18,9 @@ namespace Core.Services
             return _repository.CreateEntity();
         }
 
-        public IPaymentDetails CreatePaymentDetailsEntity()
+        public ICustomer CreateCustomerEntity()
         {
-            return _repository.CreatePaymentDetailsEntity();
+            return _repository.CreateCustomerEntity();
         }
 
         public async Task SaveAsync(IEnumerable<ITransaction> transactions)

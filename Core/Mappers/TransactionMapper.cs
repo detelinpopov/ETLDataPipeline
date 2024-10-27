@@ -10,17 +10,16 @@ namespace Core.Mappers
         {
             ITransaction transaction = transactionService.CreateEntity();
             transaction.Id = model.Id;
-            transaction.CustomerName = model.CustomerName;
             transaction.Amount = model.Amount;
             transaction.TransactionDate = model.TransactionDate;
             transaction.DataSource = model.DataSource;
+            transaction.PaymentMethod = model.PaymentMethod.ToString();
 
-            if (model.PaymentDetails != null)
+            if (model.Customer != null)
             {
-                transaction.PaymentDetails = transactionService.CreatePaymentDetailsEntity();
-                transaction.PaymentDetails.PaymentMethod = model.PaymentDetails.PaymentMethod;
-                transaction.PaymentDetails.PaymentCompletedDate = model.PaymentDetails.PaymentCompletedDate;
-                transaction.PaymentDetails.CreatedDateUtc = DateTime.UtcNow;
+                transaction.Customer = transactionService.CreateCustomerEntity();
+                transaction.Customer.Name = model.Customer.Name;     
+                transaction.Customer.CreatedDateUtc = DateTime.UtcNow;
             }
 
             return transaction;

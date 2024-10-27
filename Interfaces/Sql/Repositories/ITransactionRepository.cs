@@ -6,7 +6,7 @@ namespace Interfaces.Sql.Repositories
     {
         ITransaction CreateEntity();
 
-        IPaymentDetails CreatePaymentDetailsEntity();
+        ICustomer CreateCustomerEntity();
 
         Task SaveAsync(IEnumerable<ITransaction> transactions);
     }

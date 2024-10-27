@@ -12,9 +12,9 @@ namespace Tests.TransformationRules
             // Arrange
             var transactions = new List<TransactionModel>
             {
-                new() { Id = 1, CustomerName = "John Doe", TransactionDate = new DateTime(2023, 10, 15), Amount = 100.50m },
-                new() { Id = 1, CustomerName = "John Doe", TransactionDate = new DateTime(2023, 10, 15), Amount = 100.50m },
-                new() { Id = 2, CustomerName = "Jane Smith", TransactionDate = new DateTime(2023, 10, 16), Amount = 200.75m }
+                new() { Id = 1, TransactionDate = new DateTime(2023, 10, 15), Amount = 100.50m, Customer = new CustomerModel { Name = "Customer 1" } },
+                new() { Id = 1, TransactionDate = new DateTime(2023, 10, 15), Amount = 100.50m, Customer = new CustomerModel { Name = "Customer 1" } },
+                new() { Id = 2, TransactionDate = new DateTime(2023, 10, 16), Amount = 200.75m, Customer = new CustomerModel { Name = "Customer 2" } }
             };
 
             var rule = new RemoveDuplicatesRule();
@@ -24,8 +24,8 @@ namespace Tests.TransformationRules
 
             // Assert
             Assert.AreEqual(2, result.Count);
-            Assert.IsTrue(result.Any(r => r.CustomerName == "John Doe"));
-            Assert.IsTrue(result.Any(r => r.CustomerName == "Jane Smith"));
+            Assert.IsTrue(result.Any(r => r.Customer.Name == "Customer 1"));
+            Assert.IsTrue(result.Any(r => r.Customer.Name == "Customer 2"));
         }
     }
 }
