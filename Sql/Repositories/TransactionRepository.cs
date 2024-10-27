@@ -28,7 +28,7 @@ namespace Sql.Repositories
 
         public async Task SaveAsync(IEnumerable<ITransaction> transactions)
         {
-            var dbTransactions = transactions.ToListOfDbTransactions();         
+            var dbTransactions = transactions.ToListOfDbTransactions();          
             await _dbContext.BulkInsertOrUpdateAsync(dbTransactions, o => o.IncludeGraph = true);
         }
     }

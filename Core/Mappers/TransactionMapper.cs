@@ -15,12 +15,10 @@ namespace Core.Mappers
             transaction.DataSource = model.DataSource;
             transaction.PaymentMethod = model.PaymentMethod.ToString();
 
-            if (model.Customer != null)
-            {
-                transaction.Customer = transactionService.CreateCustomerEntity();
-                transaction.Customer.Name = model.Customer.Name;     
-                transaction.Customer.CreatedDateUtc = DateTime.UtcNow;
-            }
+            transaction.Customer = transactionService.CreateCustomerEntity();
+            transaction.Customer.Id = model.Customer.Id;
+            transaction.Customer.Name = model.Customer.Name;
+            transaction.Customer.CreatedDateUtc = DateTime.UtcNow;
 
             return transaction;
         }

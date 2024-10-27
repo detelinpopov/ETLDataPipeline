@@ -24,7 +24,8 @@ namespace Core.DataSources
                         PaymentMethod = PaymentMethod.CreditCard,
                         DataSource = DataSource.API.ToString(),
                         Customer = new CustomerModel
-                        {
+                        { 
+                            Id = 123,
                            Name = "Test Customer 1",
                         }
                     },
@@ -37,6 +38,7 @@ namespace Core.DataSources
                         DataSource = DataSource.API.ToString(),
                         Customer = new CustomerModel
                         {
+                            Id = 345,
                            Name = "Test Customer 2",
                         }
                     },
@@ -49,6 +51,7 @@ namespace Core.DataSources
                         DataSource = DataSource.API.ToString(),
                         Customer = new CustomerModel
                         {
+                           Id = 789,
                            Name = "Test Customer 3",
                         }
                     },
@@ -61,6 +64,7 @@ namespace Core.DataSources
                         DataSource = DataSource.API.ToString(),
                         Customer = new CustomerModel
                         {
+                           Id = 12,
                            Name = "Test Customer 4",
                         }
                     },

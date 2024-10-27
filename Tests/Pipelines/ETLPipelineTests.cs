@@ -20,8 +20,8 @@ namespace Tests.Pipelines
             {
                 Transactions = new List<TransactionModel>()
                 {
-                    new() { Id = 1, TransactionDate = new DateTime(2023, 10, 15), Amount = 100.50m, Customer = new CustomerModel { Name = "Customer 1" } },
-                    new() { Id = 2, TransactionDate = new DateTime(2023, 10, 16), Amount = 99.75m, Customer = new CustomerModel { Name = "Customer 2" } }
+                    new() { Id = 1, TransactionDate = new DateTime(2023, 10, 15), Amount = 100.50m, Customer = new CustomerModel { Id = 1, Name = "Customer 1" } },
+                    new() { Id = 2, TransactionDate = new DateTime(2023, 10, 16), Amount = 99.75m, Customer = new CustomerModel { Id = 2, Name = "Customer 2" } }
                 }
             });
 
@@ -30,8 +30,8 @@ namespace Tests.Pipelines
             {
                 Transactions = new List<TransactionModel>()
                 {
-                    new() { Id = 1, TransactionDate = new DateTime(2023, 10, 15), Amount = 100.50m, Customer = new CustomerModel { Name = "Customer 3" } },
-                    new() { Id = 4, TransactionDate = new DateTime(2023, 10, 17), Amount = 55.30m, Customer = new CustomerModel { Name = "Customer 4" } }
+                    new() { Id = 1, TransactionDate = new DateTime(2023, 10, 15), Amount = 100.50m, Customer = new CustomerModel { Id = 3, Name = "Customer 3" } },
+                    new() { Id = 4, TransactionDate = new DateTime(2023, 10, 17), Amount = 55.30m, Customer = new CustomerModel { Id = 4, Name = "Customer 4" } }
                 }
             });
 

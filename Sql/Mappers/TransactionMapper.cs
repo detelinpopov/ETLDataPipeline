@@ -13,13 +13,11 @@ namespace Sql.Mappers
             transaction.TransactionDate = model.TransactionDate;
             transaction.PaymentMethod = model.PaymentMethod;
             transaction.DataSource = model.DataSource;
-           
-            if (model.Customer != null)
-            {
-                transaction.Customer = new Customer();
-                transaction.Customer.Name = model.Customer.Name;
-                transaction.Customer.CreatedDateUtc = DateTime.UtcNow;
-            }
+
+            transaction.Customer = new Customer();
+            transaction.Customer.Id = model.Customer.Id;
+            transaction.Customer.Name = model.Customer.Name;
+            transaction.Customer.CreatedDateUtc = DateTime.UtcNow;
 
             transaction.CreatedDateTimeUtc = DateTime.UtcNow;
             return transaction;

@@ -26,18 +26,19 @@ namespace Core.DataSources
                     {
                         var line = await reader.ReadLineAsync();
                         var values = line.Split(',');
-                        var paymentMethod = Enum.TryParse(values[4], out PaymentMethod paymentMethodParsed);
+                        var paymentMethod = Enum.TryParse(values[3], out PaymentMethod paymentMethodParsed);
 
                         var csvEntryToTransaction = new TransactionModel
                         {
                             Id = int.Parse(values[0]),
-                            Amount = decimal.Parse(values[2]),
-                            TransactionDate = DateTime.Parse(values[3]),
+                            Amount = decimal.Parse(values[1]),
+                            TransactionDate = DateTime.Parse(values[2]),
                             DataSource = DataSource.CSV.ToString(),
                             PaymentMethod = paymentMethodParsed,
-                            Customer = new CustomerModel 
-                            { 
-                                Name = values[1] 
+                            Customer = new CustomerModel
+                            {
+                                Id = int.Parse(values[4]),
+                                Name = values[5] 
                             }
                         };
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Interfaces.Sql.Entities;
+using Microsoft.EntityFrameworkCore;
 using Sql.Entities;
 
 namespace Sql.Context
@@ -14,9 +15,9 @@ namespace Sql.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
-            {              
+            {
                 modelBuilder.Entity(entityType.ClrType).ToTable(entityType.ClrType.Name);
-            }         
+            }          
         }
 
         public DbSet<Transaction> Transactions { get; set; }
