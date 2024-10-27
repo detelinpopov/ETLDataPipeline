@@ -15,6 +15,7 @@ using Sql.Repositories;
 using Core.Mappers;
 using Interfaces.Core;
 using Core.Models.Operations;
+using Core.Enums;
 
 class Program
 {
@@ -68,18 +69,19 @@ class Program
                 Console.WriteLine($"Transaction: {transaction.Customer.Name}, Amount: {transaction.Amount}, Date: {transaction.TransactionDate}");
 
                 var log = transactionLogService.CreateEntity();
-                log.LogType = "Message";
-                log.Message = $"Transaction Created: Customer Name: {transaction.Customer.Name}, Amount: {transaction.Amount}, Date: {transaction.TransactionDate}";
-                transactionLogService.SaveAsync(log);
+                log.LogType = LogType.Message.ToString();
+                log.Message = $"Transaction Created: {transaction.Customer.Name}, Amount: {transaction.Amount}, Date: {transaction.TransactionDate}";
+                log.Severity = 1;
+                await transactionLogService.SaveAsync(log);
             }
         }
         catch (Exception ex)
         {
             var log = transactionLogService.CreateEntity();
-            log.LogType = "Error";
+            log.LogType = LogType.Error.ToString();
             log.Message = ex.Message;
             log.Severity = 5;
-            transactionLogService.SaveAsync(log);
+            await transactionLogService.SaveAsync(log);
         }
         finally
         {
