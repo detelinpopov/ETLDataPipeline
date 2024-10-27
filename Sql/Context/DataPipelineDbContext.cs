@@ -1,5 +1,4 @@
-﻿using Interfaces.Sql.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Sql.Entities;
 
 namespace Sql.Context
@@ -22,6 +21,8 @@ namespace Sql.Context
 
         public DbSet<Transaction> Transactions { get; set; }
 
-        public DbSet<Customer> PaymentDetails { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+
+        public DbSet<TransactionLog> TransactionLog { get; set; }
     }
 }

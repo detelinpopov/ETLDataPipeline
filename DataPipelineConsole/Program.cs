@@ -20,6 +20,9 @@ class Program
 {
     static async Task Main(string[] args)
     {
+        IServiceProvider serviceProvider = RegisterServices();
+        var transactionLogService = serviceProvider.GetService<ITransactionLogService>();
+
         // Create CSV file for testing purposes
         var csvFilePath = "test_transactions.csv";
         var csvContent = "Id,Amount,TransactionDate,PaymentMethod,CustomerId,CustomerName\n" +
@@ -30,9 +33,7 @@ class Program
         await File.WriteAllTextAsync(csvFilePath, csvContent);
 
         try
-        {
-            IServiceProvider serviceProvider = RegisterServices();
-
+        {          
             // Define data sources         
             var csvDataSource = new CsvDataSource(csvFilePath);
             var apiDataSource = new ApiDataSource();
@@ -52,7 +53,7 @@ class Program
             var result = await pipeline.RunAsync();
 
             var transactionService = serviceProvider.GetService<ITransactionService>();
-
+            
             var transactionsToSave = new List<ITransaction>();
             foreach (var transactionModel in result.Transactions.Where(r => r != null))
             {
@@ -65,7 +66,20 @@ class Program
             foreach (var transaction in result.Transactions)
             {
                 Console.WriteLine($"Transaction: {transaction.Customer.Name}, Amount: {transaction.Amount}, Date: {transaction.TransactionDate}");
+
+                var log = transactionLogService.CreateEntity();
+                log.LogType = "Message";
+                log.Message = $"Transaction Created: Customer Name: {transaction.Customer.Name}, Amount: {transaction.Amount}, Date: {transaction.TransactionDate}";
+                transactionLogService.SaveAsync(log);
             }
+        }
+        catch (Exception ex)
+        {
+            var log = transactionLogService.CreateEntity();
+            log.LogType = "Error";
+            log.Message = ex.Message;
+            log.Severity = 5;
+            transactionLogService.SaveAsync(log);
         }
         finally
         {
@@ -89,7 +103,10 @@ class Program
         services.AddDbContext<DataPipelineDbContext>(options => options.UseSqlServer(connectionString));
 
         services.AddScoped<ITransactionRepository, TransactionRepository>();
+        services.AddScoped<ITransactionLogRepository, TransactionLogRepository>();
+
         services.AddScoped<ITransactionService, TransactionService>();
+        services.AddScoped<ITransactionLogService, TransactionLogService>();
        
         return services.BuildServiceProvider();
     }
