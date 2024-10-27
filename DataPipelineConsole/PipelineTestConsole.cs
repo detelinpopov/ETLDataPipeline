@@ -64,7 +64,7 @@ class PipelineTestConsole
             await transactionService.SaveAsync(transactionsToSave);
 
             // Output results
-            Console.WriteLine($"{result.Transactions.Count} out of {result.Transactions.Count + result.Errors.Count} transactions processed and saved successfully!");
+            Console.WriteLine($"{result.Transactions.Count} out of {result.Transactions.Count + result.Errors.Count} transactions processed successfully!");
 
             if(result.Errors.Count > 0)
             {
