@@ -22,19 +22,17 @@ namespace Core.DataSources
                 while (!reader.EndOfStream)
                 {
                     var csvLine = await reader.ReadLineAsync();
-                    if (csvLine != null)
+
+                    var convertCsvToModelResult = CsvToTransactionMapper.CsvLineToTransactionModel(csvLine);
+                    if (convertCsvToModelResult.Success)
                     {
-                        var convertCsvToModelResult = CsvToTransactionMapper.CsvLineToTransactionModel(csvLine);
-                        if (convertCsvToModelResult.Success)
+                        convertedTransactionsResult.Transactions.Add(convertCsvToModelResult.ConvertedTransactionModel);
+                    }
+                    else
+                    {
+                        foreach (var error in convertCsvToModelResult.Errors)
                         {
-                            convertedTransactionsResult.Transactions.Add(convertCsvToModelResult.ConvertedTransactionModel);
-                        }
-                        else
-                        {
-                            foreach (var error in convertCsvToModelResult.Errors)
-                            {
-                                convertedTransactionsResult.Errors.Add(error);
-                            }
+                            convertedTransactionsResult.Errors.Add(error);
                         }
                     }
                 }
