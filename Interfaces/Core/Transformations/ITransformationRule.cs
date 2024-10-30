@@ -2,6 +2,6 @@
 {
     public interface ITransformationRule<T>
     {
-        IEnumerable<T> Apply(IEnumerable<T> transactions);
+        IEnumerable<T> Apply(IEnumerable<T> collectionToTransform);
     }
 }
